@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Alibaba.com: Home</title>
+  <link rel="icon" type="image/x-icon" href="logo.jpeg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+:root {
+  --primary-orange: #ff6a00;
+  --primary-orange-light: #ffa14a;
+  --header-bg: #121212;
+  --nav-bg: #181818;
+  --header-border: #232323;
+  --icon-inactive: #bababa;
+  --bg: #181818;
+  --text: #fff;
+  --pill-bg: #232323;
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+.topbar {
+  width: 100%;
+  background: var(--header-bg);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60px;
+  padding: 0 34px;
+  border-bottom: 1px solid var(--header-border);
+  font-size: 1.07rem;
+  box-sizing: border-box;
+}
+.topbar-left .logo {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: -1px;
+}
+.topbar-left .logo i {
+  font-size: 2.2rem;
+  color: var(--primary-orange);
+  margin-right: 9px;
+}
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.deliver {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 500;
+}
+.deliver img {
+  width: 21px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+.cart-icon {
+  font-size: 1.27em;
+  color: var(--primary-orange);
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 0 9px 0 2px;
+  transition: color 0.14s;
+}
+.cart-icon:hover { color: #ffa14a;}
+.signin {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.05rem;
+  transition: color 0.13s;
+  padding: 3px 4px;
+}
+.signin:hover { color: var(--primary-orange);}
+.create-account-btn {
+  background: var(--primary-orange);
+  color: #fff;
+  border: none;
+  border-radius: 21px;
+  padding: 9px 25px;
+  font-size: 1.08rem;
+  font-weight: bold;
+  margin-left: 4px;
+  cursor: pointer;
+  transition: background 0.16s;
+}
+.create-account-btn:hover { background: var(--primary-orange-light);}
+@media (max-width: 700px) {
+  .topbar {
+    flex-direction: column;
+    min-height: 93px;
+    padding: 8px 10px;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .topbar-right {
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .topbar-left .logo {
+    font-size: 1.25rem;
+    margin-bottom: 7px;
+  }
+}
+
+/* NAVBAR */
+.navbar {
+  width: 100%;
+  background: var(--nav-bg);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  min-height: 46px;
+  font-size: 1.07rem;
+  border-bottom: 1px solid #232323;
+  box-sizing: border-box;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.navbar-left,
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+/* Navbar links */
+.navbar-left .nav-link,
+.navbar-right .nav-link {
+  color: #fff;
+  opacity: 0.93;
+  font-weight: 500;
+  padding: 5px 6px;
+  cursor: pointer;
+  transition: opacity .15s,color .16s;
+  border-radius: 7px;
+  white-space: nowrap;
+  position: relative;
+  background: none;
+  border: none;
+}
+.navbar-left .nav-link:hover,
+.navbar-right .nav-link:hover {
+  opacity: 1;
+  color: var(--primary-orange);
+  background: #242425;
+}
+
+/* Dropdown for All Categories and other navs */
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.nav-dropdown .dropdown-toggle {
+  color: #fff;
+  font-weight: 500;
+  border-radius: 7px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.07rem;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:background 0.13s,color 0.16s,opacity 0.12s;
+  padding: 5px 10px 5px 1px;
+}
+.nav-dropdown .dropdown-toggle:hover,
+.nav-dropdown:focus-within .dropdown-toggle {
+  color: var(--primary-orange);
+  background: #242425;
+  opacity:1;
+}
+
+/* Dropdown Menu Panel */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 110%;
+  min-width: 290px;
+  max-width: 320px;
+  max-height: 350px;
+  overflow-y: auto;
+  background: #181818;
+  color: #fff;
+  box-shadow: 0 7px 32px #0006;
+  border-radius: 10px;
+  border: 1.5px solid #232323;
+  padding: 8px 0;
+  z-index: 888;
+}
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu {
+  display: block;
+}
+.dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+  background: #171717;
+  border-radius: 8px;
+}
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background: #393939;
+  border-radius: 8px;
+}
+.dropdown-menu a,
+.dropdown-menu div {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px 12px 21px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.09em;
+  white-space: nowrap;
+  transition: background 0.14s, color 0.13s, border-left 0.14s;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  background: none;
+}
+.dropdown-menu a i, .dropdown-menu div i {
+  min-width: 26px;
+  font-size: 1.22em;
+  color: #ffad66;
+  opacity: 1;
+}
+.dropdown-menu a:hover, .dropdown-menu div:hover {
+  background: #282828;
+  color: var(--primary-orange);
+  border-left: 3px solid var(--primary-orange);
+}
+.dropdown-menu a.active, .dropdown-menu div.active {
+  color: var(--primary-orange);
+  border-left: 3px solid var(--primary-orange);
+}
+@media (max-width:600px){
+  .dropdown-menu {top:100%; left: 0; min-width: 84vw;}
+}
+
+/* HERO SECTION (still dark) */
+.hero-section { min-height: 70vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient( rgba(26,26,26,0.80) 0%, rgba(20,20,20,0.82) 100%), url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1350&q=80') center center/cover no-repeat;
+}
+.hero-content {
+  width: 100%;
+  max-width: 940px;
+  padding: 47px 2vw 60px 2vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.hero-learn { display: flex; align-items: center; gap: 8px; color: #ff6a00; font-weight: 500; font-size: 1.07em; margin-bottom: 15px; letter-spacing: .04em;}
+.hero-title { color: #fff; font-size: 2.7rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 32px; margin-top: 0; line-height: 1.1; text-shadow: 0 4px 42px #000, 0 1px 12px #1118;}
+@media (max-width: 700px) {.hero-title { font-size: 1.38rem; } .hero-content { padding: 26px 3vw 37px 3vw; }}
+.hero-searchbar {
+  width: 100%;
+  max-width: 730px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 35px;
+  box-shadow: 0 2px 38px #0002;
+  margin-bottom: 19px;
+  margin-top: 2px;
+  outline: 2.2px solid #fff2;
+}
+.hero-searchbar input[type="text"] {
+  flex: 5;
+  height: 54px;
+  border: none;
+  background: transparent;
+  color: #575757;
+  font-size: 1.13rem;
+  border-radius: 35px 0 0 35px;
+  outline: none;
+  padding: 0 22px 0 22px;
+  background: none;
+}
+.hero-searchbar input[type="text"]::placeholder { color: #bababa; font-weight: 400;}
+.hero-searchbar .camera-btn { background: none; border: none; color: #ff942a; font-size: 1.24rem; cursor: pointer; margin-left: -34px; z-index: 2;}
+.hero-searchbar .camera-btn:hover { color: var(--primary-orange);}
+.hero-searchbar .search-btn { background: var(--primary-orange); color: #fff; border: none; border-radius: 0 35px 35px 0; font-size: 1.13rem; font-weight: 700; height: 42px; min-width: 122px; margin-right: 6px; margin-left: 7px; cursor: pointer; outline: none; display: flex; align-items: center; gap: 9px; justify-content: center; box-shadow: 0 2px 14px #ff6a0036; transition: background 0.17s;}
+.hero-searchbar .search-btn:hover { background: var(--primary-orange-light);}
+@media (max-width: 520px) {.hero-searchbar { flex-direction: column; border-radius: 20px; } .hero-searchbar input[type="text"], .hero-searchbar .search-btn { border-radius: 10px; width:100%; } .hero-searchbar .search-btn { margin:7px 0 2px;} }
+.hero-frequent { display: flex; flex-wrap: wrap; align-items: center; gap: 10px;}
+.hero-frequent-label { color: #ff6a00; font-size: 1.02rem; font-weight: 600; margin-right: 10px; opacity: 1;}
+.hero-frequent-btn { background: var(--pill-bg); color: #fff; border: 1.3px solid #393939; border-radius: 20px; font-size: 1rem; padding: 8px 25px 7px 25px; font-weight: 500; cursor: pointer; margin-bottom: 3px; transition: background 0.16s, color 0.16s, border-color 0.14s;}
+.hero-frequent-btn:hover { background: var(--primary-orange); color: #fff; border-color: var(--primary-orange);}
+.features-row { display: flex; justify-content: space-between; gap: 24px; background: #442312; padding: 38px 24px;}
+.feature-card { flex: 1; background: rgba(255,255,255,0.04); border-radius: 18px; padding: 32px 26px 28px 26px; color: #fff; display: flex; flex-direction: column; align-items: flex-start; min-width: 200px; max-width: 320px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);}
+.feature-icon { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.09); border-radius: 50%; width: 48px; height: 48px; font-size: 1.5rem; margin-bottom: 18px;}
+.feature-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 12px;}
+.feature-desc { font-size: 1rem; color: #e9e6e2; line-height: 1.6;}
+@media (max-width: 900px) {
+  .features-row { flex-direction: column; gap: 18px; padding: 24px 0; }
+  .feature-card { max-width: 100%; width: 100%; }
+}
+.feature-card { transition: background 0.2s, box-shadow 0.2s, transform 0.2s;}
+.feature-card:hover { background: #683a16; box-shadow: 0 4px 24px 0 rgba(0,0,0,0.15); transform: translateY(-4px) scale(1.025); cursor: pointer; }
+.feature-icon { transition: color 0.18s, background 0.2s, transform 0.2s;}
+.feature-card:hover .feature-icon,
+.feature-card:focus .feature-icon {
+  color: #ffd972;           /* highlight color on hover */
+  background: #472610;      /* slightly lighter/darker background */
+  transform: scale(1.15) rotate(-8deg);
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.20);
+}
+  </style>
+</head>
+<body>
+  <!-- 1st Row: Logo + Account/Delivery -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="logo"><i class="fab fa-alipay"></i> Alibaba.com</span>
+    </div>
+    <div class="topbar-right">
+      <span class="deliver">
+        Deliver to:
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg" alt="BD" />
+        BD
+      </span>
+      <button class="cart-icon" title="Cart">
+        <i class="fas fa-shopping-cart"></i>
+      </button>
+      <a href="#" class="signin">Sign in</a>
+      <button class="create-account-btn">Create account</button>
+    </div>
+  </div>
+  <div class="navbar">
+    <div class="navbar-left">
+      <!-- ALL CATEGORIES DROPDOWN -->
+      <div class="nav-dropdown">
+        <span class="dropdown-toggle">
+          <i class="fas fa-bars"></i> All categories
+        </span>
+        <div class="dropdown-menu">
+          <a href="#"><i class="far fa-star"></i> Categories for you</a>
+          <a href="#"><i class="fas fa-person-dress"></i> Apparel & Accessories</a>
+          <a href="#"><i class="fas fa-futbol"></i> Sports & Entertainment</a>
+          <a href="#"><i class="fas fa-pump-soap"></i> Personal Care & Home Care</a>
+          <a href="#"><i class="fas fa-industry"></i> Industrial Machinery</a>
+          <a href="#"><i class="fas fa-building"></i> Commercial Equipment & Machinery</a>
+          <a href="#"><i class="fas fa-headphones"></i> Consumer Electronics</a>
+          <a href="#"><i class="fas fa-couch"></i> Home & Garden</a>
+          <a href="#"><i class="fas fa-spa"></i> Beauty</a>
+        </div>
+      </div>
+      <!-- FEATURED SELECTIONS DROPDOWN -->
+      <div class="nav-dropdown">
+        <span class="dropdown-toggle">Featured selections</span>
+        <div class="dropdown-menu">
+          <a href="#"><i class="fas fa-fire"></i> Trending products</a>
+          <a href="#"><i class="fas fa-bolt"></i> New arrivals</a>
+          <a href="#"><i class="fas fa-tags"></i> Top deals</a>
+          <a href="#"><i class="fas fa-box-open"></i> Sample center</a>
+          <a href="#"><i class="fas fa-rocket"></i> Fast customization</a>
+        </div>
+      </div>
+      <!-- ORDER PROTECTIONS DROPDOWN -->
+      <div class="nav-dropdown">
+        <span class="dropdown-toggle">Order protections</span>
+        <div class="dropdown-menu">
+          <a href="#"><i class="fas fa-credit-card"></i> Safe & easy payments</a>
+          <a href="#"><i class="fas fa-undo"></i> Money-back policy</a>
+          <a href="#"><i class="fas fa-truck"></i> Shipping & logistics</a>
+          <a href="#"><i class="fas fa-shield-alt"></i> Trade Assurance</a>
+          <a href="#"><i class="fas fa-comments"></i> After-sales supports</a>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-right">
+      <span class="nav-link">AI sourcing agent</span>
+      <span class="nav-link">Buyer Central</span>
+      <span class="nav-link">Help Center</span>
+      <span class="nav-link">App & extension</span>
+      <a class="nav-link" href="supplier.html">Become a supplier</a>
+    </div>
+  </div>
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="hero-learn">
+        <i class="fas fa-play-circle"></i>
+        Learn about Alibaba.com
+      </div>
+      <h1 class="hero-title">
+        The leading B2B ecommerce platform for global trade
+      </h1>
+      <form class="hero-searchbar" action="#" method="get">
+        <input type="text" placeholder="iphones 15 pro max" name="q" />
+        <button type="button" class="camera-btn" title="Search by image">
+          <i class="fas fa-camera"></i>
+        </button>
+        <button type="submit" class="search-btn">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </form>
+      <div class="hero-frequent">
+        <span class="hero-frequent-label">Frequently searched:</span>
+        <button type="button" class="hero-frequent-btn">Pakistani Dress</button>
+        <button type="button" class="hero-frequent-btn">Gadgets</button>
+        <button type="button" class="hero-frequent-btn">iphones 15 pro max</button>
+      </div>
+    </div>
+  </div>
+   <div class="features-row">
+    <div class="feature-card">
+      <span class="feature-icon"><i class="fas fa-th-large"></i></span>
+      <div class="feature-title">Millions of business offerings</div>
+      <div class="feature-desc">
+        Explore products and suppliers for your business from millions of offerings worldwide.
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon"><i class="fas fa-check-circle"></i></span>
+      <div class="feature-title">Assured quality and transactions</div>
+      <div class="feature-desc">
+        Ensure production quality from verified suppliers, with your orders protected from payment to delivery.
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon"><i class="fas fa-exchange-alt"></i></span>
+      <div class="feature-title">One-stop trading solution</div>
+      <div class="feature-desc">
+        Order seamlessly from product/supplier search to order management, payment, and fulfillment.
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon"><i class="fas fa-stream"></i></span>
+      <div class="feature-title">Tailored trading experience</div>
+      <div class="feature-desc">
+        Get curated benefits, such as exclusive discounts, enhanced protection, and extra support, to help grow your business every step of the way.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Clicking a frequent search fills in the search input
+    document.querySelectorAll('.freq-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelector('.search-input').value = btn.textContent;
+        document.querySelector('.search-input').focus();
+      });
+    });
+  </script>
+  <script>
+    // Fill search bar by clicking a frequent search
+    document.querySelectorAll('.hero-frequent-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelector('.hero-searchbar input').value = btn.textContent;
+        document.querySelector('.hero-searchbar input').focus();
+      });
+    });
+  </script>
+</body>
+</html>

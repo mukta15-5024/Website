@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Alibaba Supplier Signup</title>
+ <link rel="icon" type="image/x-icon" href="logo.jpeg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f6f9fc;
+}
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-panel {
+  position: relative;
+  width: 55%;
+  background: url('https://images.unsplash.com/photo-1517292987719-0369a794ec0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80') center center/cover no-repeat;
+  display: flex;
+  align-items: stretch; 
+  justify-content: center;
+  min-height: 350px;
+}
+
+.testimonial {
+  position: absolute;      
+  left: 0;
+  right: 0;
+  bottom: 32px;           
+  margin: 0 auto;
+  z-index: 2;
+  color: #0c2b37;
+  max-width: 480px;
+  padding: 30px 38px 28px 38px;
+  opacity: 23;
+  text-align: left;
+}
+.overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(110deg, rgba(0,89,131,0.37) 10%, rgba(0,0,0,0.24) 100%);
+  z-index: 1;
+  border-radius: 0 20px 20px 0;
+}
+
+.quote {
+  font-size: 1.24rem;
+  font-weight: bolder;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  color: white;
+}
+.author {
+  font-size: 1rem;
+  color: white;
+  margin-top: 6px;
+}
+.right-panel {
+  width: 45%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -6px 0 28px -12px #22649611;
+  min-width: 350px;
+}
+.form-container {
+  width: 100%;
+  max-width: 415px;
+  margin: 0 auto;
+  padding: 36px 0;
+}
+.form-container h2 {
+  margin-bottom: 20px;
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: #03456f;
+}
+.location {
+  font-size: 1rem;
+  margin-bottom: 22px;
+  font-weight: 500;
+  color: #2e4a68;
+}
+.flag-small {
+  width: 20px;
+  vertical-align: middle;
+  margin-right: 6px;
+  border-radius: 3px;
+}
+.social-btn {
+  width: 100%;
+  padding: 13px;
+  margin-bottom: 13px;
+  border: 1.6px solid #e6dbfe;
+  border-radius: 9px;
+  font-size: 1.04rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: #f8f4ff;
+  color: #533ab2;
+  box-shadow: 0 1px 4px #dac6fa13;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transition: background .18s, color .14s, box-shadow .19s;
+}
+.social-btn .fa-google { color: #EA4335; }
+.social-btn .fa-facebook-f { color: #1877F2; }
+.social-btn .fa-linkedin-in { color: #0077B5; }
+.social-btn:hover { background: #6b4dde; color: #fff; border-color: #6b4dde; box-shadow: 0 3px 12px #beabfa40; }
+.social-btn:hover .fa-google,
+.social-btn:hover .fa-facebook-f,
+.social-btn:hover .fa-linkedin-in { color: #fff; }
+.divider {
+  text-align: center;
+  margin: 20px 0 13px 0;
+  color: #b8c3d1;
+  font-size: 1.01rem;
+  letter-spacing: .04em;
+  position: relative;
+}
+.divider:before, .divider:after {
+  content: '';
+  display: inline-block;
+  width: 56px;
+  height: 2px;
+  vertical-align: middle;
+  background: linear-gradient(to right,#e7ecf2, #b0d8f6);
+  border-radius: 1px;
+  margin: 0 11px;
+}
+.input-field {
+  width: 100%;
+  padding: 13px 15px;
+  margin-bottom: 15px;
+  border: 1.5px solid #c0d3e4;
+  border-radius: 5px;
+  font-size: 1.04rem;
+  background: #fff;
+  color: #1a344c;
+  transition: border 0.25s, box-shadow 0.23s, background 0.18s;
+  box-shadow: 0 2px 5px 0 #03385805;
+}
+.input-field:focus, .input-field:hover {
+  border-color: #0073ba;
+  outline: none;
+  background: #f7fafd;
+  box-shadow: 0 2px 12px #c5e5fa41;
+}
+.input-error {
+  border-color: #ed6a6a !important;
+  background: #fff3f3 !important;
+  color: #ed6a6a !important;
+  box-shadow: 0 2px 6px 0 #f7d6d623;
+}
+.input-ok {
+  border-color: #43a047 !important;
+  background: #f0fbf3 !important;
+  color: #155234 !important;
+}
+#emailError, #fnameError, #lnameError {
+  color: #ed6a6a;
+  font-size: 0.98rem;
+  margin-bottom: 8px;
+  display: none;
+  padding-left: 2px;
+}
+.validation-list {
+  font-size: 1.01rem;
+  margin-bottom: 8px;
+  display: none;
+  margin-left: 1px;
+}
+.validation-list.active { display: block; }
+.validation-span {
+  color: #35485a;
+  padding: 1.5px 2px;
+  display: block;
+}
+.validation-error {
+  color: #ed6a6a;
+}
+.validation-success {
+  color: #45a867;
+}
+.slider-container {
+  width: 100%;
+  margin-bottom: 19px;
+  user-select: none;
+}
+.slider-track {
+  background: #f0f5fa;
+  border: 1.5px solid #d2e0ed;
+  border-radius: 6px;
+  height: 40px; width: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: border 0.23s, background 0.23s;
+  box-shadow: 0 1.5px 5px 0 #cddceb0e;
+}
+.slider-btn {
+  width: 49px;
+  height: 100%;
+  background: #0073ba;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute; left: 0; top: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.6rem;
+  transition: background 0.18s, color 0.18s;
+  z-index: 2;
+  user-select: none;
+  touch-action: none;
+  box-shadow: 0 2px 6px #3082d622;
+  border: none;
+}
+.slider-btn.verified {
+  background: #43a047 !important;
+  color: #fff;
+  cursor: default;
+}
+.slider-btn.disabled {
+  background: #c4ccd8 !important;
+  color: #888 !important;
+  cursor: not-allowed;
+}
+.slider-text {
+  position: absolute;
+  left: 0; width: 100%; height: 100%;
+  text-align: center;
+  line-height: 40px;
+  color: #568eb9;
+  font-size: 1.08rem;
+  font-weight: 500;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  letter-spacing: .01em;
+}
+.slider-track.verified {
+  background: #e1f6e7 !important;
+  border-color: #43a047 !important;
+}
+.slider-track.disabled {
+  background: #f5f6f8 !important;
+  border-color: #e6e6e6 !important;
+}
+.create-account, .create-account-blue {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 22px;
+  cursor: pointer;
+  letter-spacing: .03em;
+  transition: background 0.19s, color 0.20s;
+}
+.create-account {
+  background: #f0f2f5;
+  color: #a6aab0;
+  cursor: not-allowed;
+}
+.create-account-blue {
+  background: #0073ba;
+  color: #fff;
+  box-shadow: 0 1px 10px #3082d618;
+}
+.create-account-blue[disabled] {
+  background: #f0f2f5;
+  color: #b9bbc1;
+  cursor: not-allowed;
+}
+.create-account-blue:hover:not([disabled]) {
+  background: #005983;
+}
+
+.checkbox {
+  margin-bottom: 18px;
+  font-size: 0.99rem;
+  color: #406086;
+  font-weight: 500;
+  letter-spacing: .02em;
+}
+.checkbox input[type="checkbox"] {
+  accent-color: #0073ba;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 19px;
+  color: #0073ba;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color .17s;
+  padding: 0 0 0 3px;
+}
+.back-btn:hover { color:#005983; }
+
+.signin-link {
+  text-align: center;
+  font-size: 0.98rem;
+  color: #587998;
+  margin-top: 2px;
+}
+.signin-link a {
+  color: #1877f3;
+  text-decoration: none;
+  margin-left: 5px;
+  font-weight: 500;
+  transition: color .2s;
+}
+.signin-link a:hover { color: #005983; }
+
+.label-inline {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+@media (max-width: 900px) {
+  .container { flex-direction: column; }
+  .left-panel, .right-panel { width: 100%; height: 47vh; min-width: 0; }
+  .right-panel { min-width: 0; }
+  .form-container { max-width: 98vw; }
+  .left-panel { border-radius: 0 0 20px 20px; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <div class="overlay"></div>
+      <div class="testimonial">
+        <p class="quote">
+          "In just 1 year, LTA International generated 14 new customers with new sales growth totaling $1.5 million."
+        </p>
+        <div class="author">
+          <strong>Andrea Vitiello</strong><br>
+          LTA International, Fundador
+        </div>
+      </div>
+    </div>
+    <div class="right-panel">
+      <div class="form-container" id="firstForm">
+        <h2>Sign up as a supplier</h2>
+        <div class="location">
+          Company location: <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg" alt="Bangladesh Flag" class="flag-small"> Bangladesh
+        </div>
+        <button class="social-btn"><i class="fab fa-google"></i> Continue with Google</button>
+        <button class="social-btn"><i class="fab fa-facebook-f"></i> Continue with Facebook</button>
+        <button class="social-btn"><i class="fab fa-linkedin-in"></i> Continue with LinkedIn</button>
+        <div class="divider">Or</div>
+        <input type="email" placeholder="Email" class="input-field" id="emailInput">
+        <button class="create-account" id="createAccountBtn">Create account</button>
+        <div class="signin-link">
+          Already have an account? <a href="#">Sign in</a>
+        </div>
+      </div>
+      <div class="form-container" id="secondForm" style="display: none;">
+        <button class="back-btn" id="backBtn">&larr; Back</button>
+        <h2>Sign up as a supplier</h2>
+        <div class="location">
+          Company location: <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg" alt="Bangladesh Flag" class="flag-small"> Bangladesh
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: space-between; margin-bottom: 18px;">
+          <button class="social-btn"><i class="fab fa-google"></i></button>
+          <button class="social-btn"><i class="fab fa-facebook-f"></i></button>
+          <button class="social-btn"><i class="fab fa-linkedin-in"></i></button>
+        </div>
+        <div class="divider">Or</div>
+
+        <input type="email" placeholder="Email" class="input-field" id="email2">
+        <div id="emailError">Please enter a valid email address</div>
+
+        <input type="password" placeholder="Password" class="input-field" id="password2">
+        <div id="passwordValidation" class="validation-list">
+          <span id="pw_len" class="validation-span">Contains 6 to 20 characters</span>
+          <span id="pw_chars" class="validation-span">Contains letters, numbers or symbols only</span>
+          <span id="pw_mix" class="validation-span">Contains at least two of the following: letters, numbers or symbols</span>
+        </div>
+        <input type="text" placeholder="First name" class="input-field" id="fname2">
+        <div id="fnameError">First name can only contain letters and spaces.</div>
+        <input type="text" placeholder="Last name" class="input-field" id="lname2">
+        <div id="lnameError">Last name can only contain letters and spaces.</div>
+        <div id="sliderContainer" class="slider-container">
+          <div id="sliderTrack" class="slider-track">
+            <span id="sliderText" class="slider-text">Please slide to verify</span>
+            <div id="sliderBtn" class="slider-btn"><i class="fa fa-angle-double-right"></i></div>
+          </div>
+        </div>
+
+        <div class="checkbox">
+          <input type="checkbox" id="termsCheck">
+          <label for="termsCheck" class="label-inline">
+            I agree to the Free Membership Agreement, Terms of Use, and Privacy Policy of Alibaba.com.
+          </label>
+        </div>
+        <button class="create-account-blue" id="detailedCreateBtn" disabled>Create account</button>
+        <div class="signin-link">
+          Already have an account? <a href="#">Sign in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function validateEmail(email) {
+      const re = /^\S+@\S+\.\S+$/;
+      return re.test(email);
+    }
+    function passwordLengthValid(pw) {
+      return pw.length >= 6 && pw.length <= 20;
+    }
+    function passwordCharsValid(pw) {
+      return !/\s/.test(pw);
+    }
+    function passwordMixValid(pw) {
+      const hasLetter = /[a-zA-Z]/.test(pw);
+      const hasNumber = /\d/.test(pw);
+      const hasSymbol = /[^a-zA-Z0-9]/.test(pw);
+      return [hasLetter, hasNumber, hasSymbol].filter(Boolean).length >= 2;
+    }
+    function onlyLettersAndSpaces(str) {
+      return /^[A-Za-z\s]+$/.test(str.trim());
+    }
+
+    let allowSlider = false;
+
+    // NAV
+    document.getElementById('emailInput').addEventListener('click', function() {
+      document.getElementById('firstForm').style.display = 'none';
+      document.getElementById('secondForm').style.display = 'block';
+      document.getElementById('email2').focus();
+      resetEmailView();
+      resetPasswordView();
+      resetSlider();
+      updateSliderState();
+    });
+
+    document.getElementById('backBtn').addEventListener('click', function() {
+      document.getElementById('secondForm').style.display = 'none';
+      document.getElementById('firstForm').style.display = 'block';
+      document.getElementById('emailInput').focus();
+    });
+    const email2 = document.getElementById('email2');
+    const emailError = document.getElementById('emailError');
+    emailError.style.display = 'none';
+    function resetEmailView() {
+      email2.className = 'input-field';
+      emailError.style.display = 'none';
+    }
+    let emailTouched = false;
+    email2.addEventListener('focus', function() {
+      emailTouched = true;
+      if (!email2.value) {
+        emailError.textContent = 'Please enter a valid email address';
+        emailError.style.color = '#222';
+        emailError.style.display = 'block';
+      }
+    });
+    email2.addEventListener('blur', function() {
+      if (!email2.value) {
+        resetEmailView();
+      }
+    });
+    email2.addEventListener('input', function() {
+      emailError.style.display = 'block';
+      if (!validateEmail(email2.value)) {
+        if (email2.value === '') {
+          email2.className = 'input-field';
+          emailError.style.color = '#222';
+          emailError.textContent = 'Please enter a valid email address';
+        } else {
+          email2.className = 'input-field input-error';
+          emailError.style.color = '#ed6a6a';
+          emailError.textContent = 'Please enter a valid email address';
+        }
+      } else {
+        email2.className = 'input-field input-ok';
+        emailError.style.display = 'none';
+      }
+      validateDetailedForm();
+      updateSliderState();
+    });
+
+    const password2 = document.getElementById('password2');
+    const passwordValidation = document.getElementById('passwordValidation');
+    const pwLen = document.getElementById('pw_len');
+    const pwChars = document.getElementById('pw_chars');
+    const pwMix = document.getElementById('pw_mix');
+    function resetPasswordView() {
+      password2.className = 'input-field';
+      passwordValidation.classList.remove('active');
+      pwLen.className = 'validation-span';
+      pwChars.className = 'validation-span';
+      pwMix.className = 'validation-span';
+    }
+    let pwTouched = false;
+    password2.addEventListener('focus', function() {
+      pwTouched = true;
+      passwordValidation.classList.add('active');
+      if (!password2.value) {
+        pwLen.className = 'validation-span';
+        pwChars.className = 'validation-span';
+        pwMix.className = 'validation-span';
+      }
+    });
+    password2.addEventListener('blur', function() {
+      if (!password2.value) resetPasswordView();
+    });
+    password2.addEventListener('input', function() {
+      passwordValidation.classList.add('active');
+      let val = password2.value;
+      let allValid = true;
+
+      if (val === '') {
+        pwLen.className = 'validation-span';
+        pwChars.className = 'validation-span';
+        pwMix.className = 'validation-span';
+        password2.className = 'input-field';
+      } else {
+        if (passwordLengthValid(val)) {
+          pwLen.className = 'validation-span validation-success';
+        } else {
+          pwLen.className = 'validation-span validation-error';
+          allValid = false;
+        }
+        if (passwordCharsValid(val)) {
+          pwChars.className = 'validation-span validation-success';
+        } else {
+          pwChars.className = 'validation-span validation-error';
+          allValid = false;
+        }
+        if (passwordMixValid(val)) {
+          pwMix.className = 'validation-span validation-success';
+        } else {
+          pwMix.className = 'validation-span validation-error';
+          allValid = false;
+        }
+        if (allValid) {
+          password2.className = 'input-field input-ok';
+        } else {
+          password2.className = 'input-field input-error';
+        }
+      }
+      validateDetailedForm();
+      updateSliderState();
+    });
+    const fname2 = document.getElementById('fname2');
+    const lname2 = document.getElementById('lname2');
+    const fnameError = document.getElementById('fnameError');
+    const lnameError = document.getElementById('lnameError');
+    fnameError.style.display = 'none';
+    lnameError.style.display = 'none';
+
+    fname2.addEventListener('input', function() {
+      if (fname2.value.trim() === '' || onlyLettersAndSpaces(fname2.value)) {
+        fname2.classList.remove('input-error');
+        fnameError.style.display = 'none';
+      } else {
+        fname2.classList.add('input-error');
+        fnameError.style.display = 'block';
+      }
+      validateDetailedForm(); updateSliderState();
+    });
+    lname2.addEventListener('input', function() {
+      if (lname2.value.trim() === '' || onlyLettersAndSpaces(lname2.value)) {
+        lname2.classList.remove('input-error');
+        lnameError.style.display = 'none';
+      } else {
+        lname2.classList.add('input-error');
+        lnameError.style.display = 'block';
+      }
+      validateDetailedForm(); updateSliderState();
+    });
+
+    document.getElementById('termsCheck').addEventListener('change', function() {
+      validateDetailedForm(); updateSliderState();
+    });
+    let sliderBtn = document.getElementById('sliderBtn');
+    let sliderTrack = document.getElementById('sliderTrack');
+    let sliderText = document.getElementById('sliderText');
+    let sliderContainer = document.getElementById('sliderContainer');
+    let isSliding = false, startX = 0, currentX = 0, sliderWidth = 0, maxLeft = 0;
+    let verified = false;
+
+    function resetSlider() {
+      verified = false;
+      sliderBtn.style.left = '0';
+      sliderTrack.classList.remove('verified', 'disabled');
+      sliderBtn.classList.remove('verified', 'disabled');
+      sliderText.textContent = 'Please slide to verify';
+      sliderBtn.style.pointerEvents = '';
+      sliderTrack.style.pointerEvents = '';
+    }
+
+    function setVerified() {
+      verified = true;
+      sliderBtn.style.left = (maxLeft) + 'px';
+      sliderBtn.classList.add('verified');
+      sliderTrack.classList.add('verified');
+      sliderText.textContent = 'Verification complete';
+      sliderBtn.style.pointerEvents = 'none';
+      sliderTrack.style.pointerEvents = 'none';
+      validateDetailedForm();
+    }
+
+    function updateSliderState() {
+      if (allInputsValid()) {
+        sliderBtn.classList.remove('disabled');
+        sliderTrack.classList.remove('disabled');
+        sliderBtn.style.pointerEvents = '';
+        sliderTrack.style.pointerEvents = '';
+      } else {
+        if (!verified) {
+          sliderBtn.classList.add('disabled');
+          sliderTrack.classList.add('disabled');
+          sliderBtn.style.left = '0';
+          sliderBtn.style.pointerEvents = 'none';
+          sliderTrack.style.pointerEvents = 'none';
+          sliderText.textContent = 'Please slide to verify';
+        }
+      }
+    }
+
+    function allInputsValid() {
+      const validEmail = validateEmail(email2.value);
+      const pwVal = password2.value;
+      const pwValid = passwordLengthValid(pwVal) && passwordCharsValid(pwVal) && passwordMixValid(pwVal);
+      const fname = fname2.value.trim();
+      const lname = lname2.value.trim();
+      const checked = document.getElementById('termsCheck').checked;
+      const fnameValid = fname !== '' && onlyLettersAndSpaces(fname);
+      const lnameValid = lname !== '' && onlyLettersAndSpaces(lname);
+      return validEmail && pwValid && fnameValid && lnameValid && checked;
+    }
+
+    sliderBtn.addEventListener('mousedown', function(e) {
+      if (verified || !allInputsValid()) return;
+      isSliding = true;
+      startX = e.clientX;
+      sliderWidth = sliderTrack.offsetWidth;
+      maxLeft = sliderWidth - sliderBtn.offsetWidth;
+      document.body.style.userSelect = 'none';
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!isSliding || verified || !allInputsValid()) return;
+      currentX = Math.min(Math.max(e.clientX - startX, 0), maxLeft);
+      sliderBtn.style.left = currentX + 'px';
+      if ((currentX + 2) >= maxLeft) setVerified();
+    });
+    document.addEventListener('mouseup', function() {
+      if (!isSliding) return;
+      isSliding = false;
+      if (!verified) sliderBtn.style.left = '0';
+      document.body.style.userSelect = '';
+    });
+    sliderBtn.addEventListener('touchstart', function(e) {
+      if (verified || !allInputsValid()) return;
+      isSliding = true;
+      startX = e.touches[0].clientX;
+      sliderWidth = sliderTrack.offsetWidth;
+      maxLeft = sliderWidth - sliderBtn.offsetWidth;
+    });
+    document.addEventListener('touchmove', function(e) {
+      if (!isSliding || verified || !allInputsValid()) return;
+      currentX = Math.min(Math.max(e.touches[0].clientX - startX, 0), maxLeft);
+      sliderBtn.style.left = currentX + 'px';
+      if ((currentX + 2) >= maxLeft) setVerified();
+    });
+    document.addEventListener('touchend', function() {
+      if (!isSliding) return;
+      isSliding = false;
+      if (!verified) sliderBtn.style.left = '0';
+    });
+
+    function validateDetailedForm() {
+      const validEmail = validateEmail(email2.value);
+      const pwVal = password2.value;
+      const pwValid = passwordLengthValid(pwVal) && passwordCharsValid(pwVal) && passwordMixValid(pwVal);
+      const fname = fname2.value.trim();
+      const lname = lname2.value.trim();
+      const fnameValid = fname !== '' && onlyLettersAndSpaces(fname);
+      const lnameValid = lname !== '' && onlyLettersAndSpaces(lname);
+      const checked = document.getElementById('termsCheck').checked;
+      const btn = document.getElementById('detailedCreateBtn');
+      if (validEmail && pwValid && fnameValid && lnameValid && checked && verified) {
+        btn.disabled = false;
+      } else {
+        btn.disabled = true;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      resetEmailView();
+      resetPasswordView();
+      resetSlider();
+      updateSliderState();
+    });
+    document.getElementById('createAccountBtn').addEventListener('click', function() {
+      window.location.href = 'nextpage.html'; // Change as needed
+    });
+  </script>
+</body>
+</html>

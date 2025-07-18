@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Biodata - Mahmuda Akter Mukta</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f5ef;
+      margin: 0;
+      padding: 20px;
+    }
+    .biodata-card {
+      max-width: 800px;
+      margin: auto;
+      background-color: #fff;
+      border: 10px solid #a67c00;
+      padding: 30px;
+      box-sizing: border-box;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      overflow-x: auto;
+    }
+    .header {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #a67c00;
+      border-bottom: 2px solid #a67c00;
+      padding-bottom: 5px;
+    }
+    .biodata-table {
+      width: 100%;
+      margin-top: 10px;
+      border-collapse: collapse;
+    }
+    .biodata-table td {
+      padding: 8px 10px;
+      vertical-align: top;
+    }
+    .label {
+      font-weight: bold;
+      width: 30%;
+    }
+    .image-upload-box {
+      width: 150px;
+      aspect-ratio: 3/2;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #ccc;
+      margin-bottom: 8px;
+    }
+    #photo {
+      width: 100%;
+      aspect-ratio: 3/2;
+      object-fit: cover;
+      display: block;
+      background: #f5f5f5;
+    }
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+    .qualification-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .qualification-table th, .qualification-table td {
+      border: 1px solid #333;
+      padding: 8px;
+      word-break: break-word;
+    }
+    .qualification-table th {
+      background-color: #f2f2f2;
+    }
+    .qualification-table input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    @media (max-width: 600px) {
+      .qualification-table, .qualification-table thead, .qualification-table tbody,
+      .qualification-table th, .qualification-table td, .qualification-table tr {
+        display: block;
+      }
+      .qualification-table th {
+        position: absolute;
+        left: -9999px;
+      }
+      .qualification-table td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        word-break: break-word;
+      }
+    }
+    .input-error {
+      border: 2px solid red !important;
+    }
+    .error-message {
+      color: red;
+      font-size: 12px;
+      margin: 0 0 5px 0;
+    }
+  </style>
+  <script>
+    function validateForm(e) {
+      let valid = true;
+      let errors = document.querySelectorAll('.error-message');
+      errors.forEach(function(err) { err.innerText = ""; });
+      let errorInputs = document.querySelectorAll('.input-error');
+      errorInputs.forEach(function(inp) { inp.classList.remove('input-error'); });
+
+      function flag(input, errorId, msg) {
+        document.getElementById(errorId).innerText = msg;
+        input.classList.add('input-error');
+        valid = false;
+      }
+
+      // PERSONAL INFORMATION
+      let form = document.forms["biodataForm"];
+      // Name
+      let fname = form["fname"];
+      if (!/^[A-Za-z .]{2,50}$/.test(fname.value.trim())) {
+        flag(fname, "fnameErr", "Name (only letters, 2-50 characters) is required.");
+      }
+      // Date
+      let dob = form["dob"];
+      if (!dob.value) {
+        flag(dob, "dobErr", "Birthdate is required.");
+      }
+      // Place
+      let dobp = form["dobp"];
+      if (!/^[A-Za-z ]+$/.test(dobp.value.trim())) {
+        flag(dobp, "dobpErr", "Valid place (letters only) required.");
+      }
+      // Blood Group
+      let blood = form["bloodgroup"];
+      if(!/^(A|B|AB|O)[+-]$/.test(blood.value.trim())) {
+        flag(blood, "bloodErr", "Valid blood group (e.g., O+, AB-) required.");
+      }
+      // Education/Occupation/Religion/Nationality - basic non-empty
+      ["education","occupation","religion","nationality"].forEach(function(name){
+        let el = form[name];
+        if (!el.value.trim()) flag(el, name+"Err", "Required.");
+      });
+
+      // FAMILY INFORMATION
+      ["father_name","father_occupation","mother_name","mother_occupation",
+        "sisters","brothers","height","address"].forEach(function(name){
+        let el = form[name];
+        if (!el.value.trim()) flag(el, name+"Err", "Required.");
+      });
+      // Height (optionally: accept digits/apostrophe/inches, or simple digit)
+      let h = form["height"];
+      if (!/^[0-9]{1,2}('?((\s|-)?[0-9]{1,2})?"?$/.test(h.value.trim())) {
+        flag(h, "heightErr", "Example: 5 or 5'4");
+      }
+      // Contact
+      let contact = form["contact"];
+      if (!/^([0-9]{10,15})$/.test(contact.value)) {
+        flag(contact, "contactErr", "Contact: 10-15 digits.");
+      }
+
+      // IMAGE
+      let photo = document.getElementById('photo');
+      if (!photo.value) {
+        flag(photo, "photoErr", "Photo is required.");
+      }
+
+      // EDUCATIONAL QUALIFICATION
+      for (let i = 1; i <= 4; i++) {
+        let exam = form["exam"+i];
+        let subject = form["subject"+i];
+        let school = form["school"+i];
+        let board = form["board"+i];
+        let year = form["year"+i];
+        let grade = form["grade"+i];
+        if (!exam.value.trim()) exam.classList.add('input-error'), valid=false;
+        if (!subject.value.trim()) subject.classList.add('input-error'), valid=false;
+        if (!school.value.trim()) school.classList.add('input-error'), valid=false;
+        if (!board.value.trim()) board.classList.add('input-error'), valid=false;
+        if (i === 1) {
+          // BSc: allow year or year-year
+          if (!/^[0-9]{4}(-[0-9]{4})?$/.test(year.value)) {
+            year.classList.add('input-error');
+            valid = false;
+          }
+          // Allow text (loading) or blank for BSc grade
+        } else {
+          if (!(parseInt(year.value)>=1900 && parseInt(year.value)<=2099)) {
+            year.classList.add('input-error'); valid=false;
+          }
+          if (isNaN(grade.value) || grade.value < 0 || grade.value > 5) {
+            grade.classList.add('input-error'); valid=false;
+          }
+        }
+      }
+
+      if (!valid) e.preventDefault();
+      return valid;
+    }
+  </script>
+</head>
+<body>
+<div class="biodata-card">
+  <form name="biodataForm" enctype="multipart/form-data" onsubmit="validateForm(event)">
+    <div class="header">BIODATA</div>
+
+    <div class="section-title">PERSONAL INFORMATION</div>
+    <table class="biodata-table">
+      <tr>
+        <td class="label">Photo</td>
+        <td>
+          <div class="image-upload-box">
+            <input type="file" name="photo" id="photo" accept="image/*" required style="width:100%; height:100%; aspect-ratio:3/2;">
+          </div>
+          <div id="photoErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Name</td>
+        <td>
+          <input type="text" name="fname" value="Mahmuda Akter Mukta" required maxlength="50">
+          <div id="fnameErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Birthdate</td>
+        <td>
+          <input type="date" name="dob" required>
+          <div id="dobErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Birth Place</td>
+        <td>
+          <input type="text" name="dobp" value="Cumilla" required>
+          <div id="dobpErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Blood Group</td>
+        <td>
+          <input type="text" name="bloodgroup" value="O+" required maxlength="3">
+          <div id="bloodErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Education</td>
+        <td>
+          <input type="text" name="education" value="BSc in CSE" required>
+          <div id="educationErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Occupation</td>
+        <td>
+          <input type="text" name="occupation" value="Student" required>
+          <div id="occupationErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Religion</td>
+        <td>
+          <input type="text" name="religion" value="Muslim" required>
+          <div id="religionErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Nationality</td>
+        <td>
+          <input type="text" name="nationality" value="Bangladeshi" required>
+          <div id="nationalityErr" class="error-message"></div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="section-title">FAMILY INFORMATION</div>
+    <table class="biodata-table">
+      <tr>
+        <td class="label">Father Name</td>
+        <td>
+          <input type="text" name="father_name" value="Md. Mosharof Hossain" required>
+          <div id="father_nameErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Father's Occupation</td>
+        <td>
+          <input type="text" name="father_occupation" value="Businessman" required>
+          <div id="father_occupationErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Mother Name</td>
+        <td>
+          <input type="text" name="mother_name" value="Nasrin Akter Shemo" required>
+          <div id="mother_nameErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Mother's Occupation</td>
+        <td>
+          <input type="text" name="mother_occupation" value="Housewife" required>
+          <div id="mother_occupationErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Sisters</td>
+        <td>
+          <input type="text" name="sisters" value="1 Sister(Unmarried)" required>
+          <div id="sistersErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Brothers</td>
+        <td>
+          <input type="text" name="brothers" value="No brother" required>
+          <div id="brothersErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Height</td>
+        <td>
+          <input type="text" name="height" value="5" required maxlength="5">
+          <div id="heightErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Contact No.</td>
+        <td>
+          <input type="tel" pattern="[0-9]{10,15}" name="contact" value="0123456789" required maxlength="15">
+          <div id="contactErr" class="error-message"></div>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Address</td>
+        <td>
+          <input type="text" name="address" value="Cumilla" required>
+          <div id="addressErr" class="error-message"></div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="section-title">My Hobbies</div>
+      <input type="checkbox" id="Hob1" name="hobbies" value="Gardening">
+      <label for="Hob1"> Gardening </label><br>
+      <input type="checkbox" id="Hob2" name="hobbies" value="Crafting">
+      <label for="Hob2"> Crafting </label><br>
+      <input type="checkbox" id="Hob3" name="hobbies" value="Reading Books">
+      <label for="Hob3"> Reading Books </label><br>
+      <input type="checkbox" id="Hob4" name="hobbies" value="Painting">
+      <label for="Hob4"> Painting </label><br>
+      <input type="checkbox" id="Hob6" name="hobbies" value="Traveling">
+      <label for="Hob6"> Traveling </label><br><br>
+
+    <div class="section-title">Educational Qualification</div>
+    <div class="table-responsive">
+      <table class="qualification-table">
+        <tr>
+          <th>Examination</th>
+          <th>Subject</th>
+          <th>School/College</th>
+          <th>Board/Division</th>
+          <th>Year of Passing</th>
+          <th>Grade</th>
+        </tr>
+        <tr>
+          <td><input type="text" name="exam1" value="BSc" required maxlength="10"></td>
+          <td><input type="text" name="subject1" value="CSE" required maxlength="20"></td>
+          <td><input type="text" name="school1" value="DIU" required maxlength="30"></td>
+          <td><input type="text" name="board1" value="Dhaka" required maxlength="15"></td>
+          <td><input type="text" name="year1" value="2022-2025" pattern="[0-9]{4}(-[0-9]{4})?" required maxlength="9" title="YYYY or YYYY-YYYY"></td>
+          <td><input type="text" name="grade1" value="Loading" required maxlength="10"></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="exam2" value="H.S.C" required maxlength="10"></td>
+          <td><input type="text" name="subject2" value="Science" required maxlength="15"></td>
+          <td><input type="text" name="school2" value="P.A.M.K.C" required maxlength="30"></td>
+          <td><input type="text" name="board2" value="Cumilla" required maxlength="15"></td>
+          <td><input type="number" name="year2" value="2020" min="1900" max="2099" required></td>
+          <td><input type="number" pattern="[0-9]+(\.[0-9]{1,2})?" name="grade2" value="4.83" step="0.01" max="5" min="0" required></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="exam3" value="S.S.C" required maxlength="10"></td>
+          <td><input type="text" name="subject3" value="Science" required maxlength="15"></td>
+          <td><input type="text" name="school3" value="C.H.S" required maxlength="30"></td>
+          <td><input type="text" name="board3" value="Cumilla" required maxlength="15"></td>
+          <td><input type="number" name="year3" value="2018" min="1900" max="2099" required></td>
+          <td><input type="number" pattern="[0-9]+(\.[0-9]{1,2})?" name="grade3" value="4.72" step="0.01" max="5" min="0" required></td>
+        </tr>
+        <tr>
+          <td><input type="text" name="exam4" value="J.S.C" required maxlength="10"></td>
+          <td><input type="text" name="subject4" value="..." required maxlength="15"></td>
+          <td><input type="text" name="school4" value="C.H.S" required maxlength="30"></td>
+          <td><input type="text" name="board4" value="Cumilla" required maxlength="15"></td>
+          <td><input type="number" name="year4" value="2015" min="1900" max="2099" required></td>
+          <td><input type="number" pattern="[0-9]+(\.[0-9]{1,2})?" name="grade4" value="5.00" step="0.01" max="5" min="0" required></td>
+        </tr>
+      </table>
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+</body>
+</html>
